@@ -37,3 +37,17 @@ func (app *application) getStateFile(w http.ResponseWriter, r *http.Request) {
 
 	err = app.writeJson(w, http.StatusOK, resource, "state")
 }
+
+func (app *application) getAllResources(w http.ResponseWriter, r *http.Request) {
+	resources, err := app.models.DB.ListResources()
+	if err != nil {
+		app.errJson(w, err)
+		return
+	}
+
+	err = app.writeJson(w, http.StatusOK, resources, "state")
+	if err != nil {
+		app.errJson(w, err)
+		return
+	}
+}
